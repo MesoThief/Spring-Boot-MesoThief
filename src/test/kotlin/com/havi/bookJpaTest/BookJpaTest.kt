@@ -30,16 +30,35 @@ class BookJpaTest {
 
     @Test
     fun bookSaveTest() {
-        // FIXME
+        val book = Book(BOOT_TEST_TITLE, LocalDateTime.now())
+        testEntityManager.persist(book)
+        assertThat(bookRepository.getOne(book.idx), `is`(book))
     }
 
     @Test
     fun bookListSaveAndSearchTest() {
-        // FIXME
+        val book1 = Book(BOOT_TEST_TITLE + "1", LocalDateTime.now())
+        val book2 = Book(BOOT_TEST_TITLE + "2", LocalDateTime.now())
+        val book3 = Book(BOOT_TEST_TITLE + "3", LocalDateTime.now())
+
+        testEntityManager.persist(book1)
+        testEntityManager.persist(book2)
+        testEntityManager.persist(book3)
+
+        val bookList: List<Book> = bookRepository.findAll()
+        assertThat(bookList, hasSize(3))
+        assertThat(bookList, contains(book1, book2, book3))
     }
 
     @Test
     fun bookListSaveAndDeleteTest() {
-        // FIXME
+        val book1 = Book(BOOT_TEST_TITLE + "1", LocalDateTime.now())
+        val book2 = Book(BOOT_TEST_TITLE + "2", LocalDateTime.now())
+
+        testEntityManager.persist(book1)
+        testEntityManager.persist(book2)
+
+        bookRepository.deleteAll()
+        assertThat(bookRepository.findAll(), IsEmptyCollection.empty())
     }
 }

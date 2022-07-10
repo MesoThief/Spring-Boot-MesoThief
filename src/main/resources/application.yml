@@ -1,0 +1,13 @@
+datasource:
+  url: jdbc:h2:mem:testdb
+
+spring:
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+logging:
+  level:
+    root: DEBUG
+server:
+  port: 5000 # AWS Nginx default port

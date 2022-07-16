@@ -30,19 +30,18 @@ repositories {
 }
 
 dependencies {
+    implementation("org.springframework.security:spring-security-oauth2-client")
+    implementation("org.springframework.security:spring-security-oauth2-jose")
+    implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("junit:junit:4.13.1")
-    implementation("org.projectlombok:lombok:1.18.22")
-    implementation("org.springframework.security.oauth:spring-security-oauth2")
+    implementation("com.h2database:h2")
+    implementation("org.jetbrains.kotlin:kotlin-reflect:1.1.51")
 
-    runtimeOnly("com.h2database:h2")
-
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    runtimeOnly("org.springframework.boot:spring-boot-devtools")
+    compileOnly("org.projectlombok:lombok")
+    testCompileOnly("org.springframework.boot:spring-boot-starter-test")
 }
 
 tasks {

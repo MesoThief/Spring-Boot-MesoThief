@@ -1,1 +1,1 @@
-rootProject.name = "Spring-Boot-Test-Kotlin"
+rootProject.name = "Spring-Boot-Kotlin"

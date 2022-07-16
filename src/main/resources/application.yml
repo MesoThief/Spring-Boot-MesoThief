@@ -2,10 +2,35 @@ datasource:
   url: jdbc:h2:mem:testdb
 
 spring:
+  jpa:
+    hibernate:
+      ddl-auto: create
   h2:
     console:
       enabled: true
       path: /h2-console
+  devtools:
+    livereload:
+      enabled: true
+  thymeleaf:
+    cache: false
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 123123123
+            client-secret: 123123123
+          facebook:
+            client-id: 123123123
+            client-secret: 123123123
+  main:
+    allow-circular-references: true
+custom:
+  oauth2:
+    kakao:
+      client-id: 8dfa885aeacbf3244e308e3325e26c94
+
 logging:
   level:
     root: DEBUG

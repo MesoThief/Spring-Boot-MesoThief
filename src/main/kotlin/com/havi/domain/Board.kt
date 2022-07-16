@@ -1,6 +1,6 @@
 package com.havi.domain
 
-import com.havi.domain.enums.SocialType
+import com.havi.domain.enums.BoardType
 import lombok.Builder
 import lombok.Getter
 import lombok.NoArgsConstructor
@@ -10,33 +10,33 @@ import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.EnumType
 import javax.persistence.Enumerated
+import javax.persistence.FetchType
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
+import javax.persistence.OneToOne
 import javax.persistence.Table
 
 @Getter
 @NoArgsConstructor
 @Entity
 @Table
-class User @Builder constructor(
-    @field:Column private val name: String = "",
-    @field:Column private val password: String = "",
-    @field:Column private val email: String = "",
-    @field:Column private val principal: String = "",
+class Board @Builder constructor(
+    @field:Column private val title: String = "",
+    @field:Column private val subTitle: String = "",
+    @field:Column private val content: String = "",
     @field:Enumerated(
         EnumType.STRING,
-    ) @field:Column private val socialType: SocialType = SocialType.GOOGLE,
+    ) @field:Column private val boardType: BoardType = BoardType.free,
     @field:Column private val createdDate: LocalDateTime = LocalDateTime.now(),
     @field:Column private val updatedDate: LocalDateTime = LocalDateTime.now(),
+    @field:OneToOne(
+        fetch = FetchType.LAZY,
+    ) private val user: User = User(),
 ):
     Serializable {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private val idx: Long? = null
-
-    fun getEmail() = email
-    fun getSocialType() = socialType
-
 }

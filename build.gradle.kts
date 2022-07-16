@@ -38,6 +38,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("junit:junit:4.13.1")
     implementation("org.projectlombok:lombok:1.18.22")
+    implementation("org.springframework.security.oauth:spring-security-oauth2")
 
     runtimeOnly("com.h2database:h2")
 

@@ -20,6 +20,7 @@ import org.springframework.web.context.request.RequestContextHolder
 import org.springframework.web.context.request.ServletRequestAttributes
 import org.springframework.web.method.support.HandlerMethodArgumentResolver
 import org.springframework.web.method.support.ModelAndViewContainer
+import java.lang.reflect.TypeVariable
 import java.time.LocalDateTime
 import javax.servlet.http.HttpSession
 
@@ -38,35 +39,36 @@ class UserArgumentResolver(private val userRepository: UserRepository): HandlerM
         binderFactory: WebDataBinderFactory?,
     ): Any? {
         val session = (RequestContextHolder.currentRequestAttributes() as ServletRequestAttributes).request.session
-        val user = session.getAttribute("user") as User
+        val obj = session.getAttribute("user")
+        val user = if (obj != null) obj as User else null
         return getUser(user, session)
     }
 
-    private fun getUser(user: User, session: HttpSession): User {
+    private fun getUser(userParam: User?, session: HttpSession): User {
+        var user = userParam
         if (user == null) {
             try {
                 val authentication = SecurityContextHolder.getContext().authentication as OAuth2AuthenticationToken
                 val map = authentication.principal.attributes
                 val convertUser = convertUser(authentication.authorizedClientRegistrationId, map)
 
-                var authorizedUser = userRepository.findByEmail(convertUser!!.email)
-                if (authorizedUser == null) authorizedUser = userRepository.save(convertUser)
+                user = userRepository.findByEmail(convertUser?.email ?: "")
+                if (user == null) user = userRepository.save(convertUser ?: User())
 
-                setRoleIfNotSame(authorizedUser, authentication, map)
-                return authorizedUser
+                setRoleIfNotSame(user, authentication, map)
             } catch (e: ClassCastException) {
-                return user
+                return user ?: User()
             }
         }
         return user
     }
 
     private fun convertUser(authority: String, map: Map<String, Any>): User? {
-        when (authority) {
-            FACEBOOK.roleType -> return getModernUser(FACEBOOK, map)
-            GOOGLE.roleType -> return getModernUser(GOOGLE, map)
-            KAKAO.roleType -> return getKakaoUser(map)
-            else -> return null
+        return when (authority) {
+            FACEBOOK.roleType -> getModernUser(FACEBOOK, map)
+            GOOGLE.roleType -> getModernUser(GOOGLE, map)
+            KAKAO.roleType -> getKakaoUser(map)
+            else -> null
         }
     }
 

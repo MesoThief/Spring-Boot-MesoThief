@@ -19,6 +19,7 @@ class User {
     lateinit var name: String
     lateinit var password: String
     lateinit var email: String
+
     lateinit var principal: String
 
     @Enumerated(EnumType.STRING)

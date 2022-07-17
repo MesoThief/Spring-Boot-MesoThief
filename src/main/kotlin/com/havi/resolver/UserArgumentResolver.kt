@@ -20,7 +20,6 @@ import org.springframework.web.context.request.RequestContextHolder
 import org.springframework.web.context.request.ServletRequestAttributes
 import org.springframework.web.method.support.HandlerMethodArgumentResolver
 import org.springframework.web.method.support.ModelAndViewContainer
-import java.lang.reflect.TypeVariable
 import java.time.LocalDateTime
 import javax.servlet.http.HttpSession
 
@@ -39,28 +38,35 @@ class UserArgumentResolver(private val userRepository: UserRepository): HandlerM
         binderFactory: WebDataBinderFactory?,
     ): Any? {
         val session = (RequestContextHolder.currentRequestAttributes() as ServletRequestAttributes).request.session
-        val obj = session.getAttribute("user")
-        val user = if (obj != null) obj as User else null
+        val user = session.getAttribute("user")
         return getUser(user, session)
     }
 
-    private fun getUser(userParam: User?, session: HttpSession): User {
-        var user = userParam
-        if (user == null) {
-            try {
+    private fun getUser(userFromSession: Any?, session: HttpSession): User {
+        if (userFromSession != null) return userFromSession as User
+        else {
+            val defaultUser = User().apply {
+                name = "name"
+                email = "email@email.com"
+                socialType = FACEBOOK
+                createdDate = LocalDateTime.now()
+            }
+
+            return try {
                 val authentication = SecurityContextHolder.getContext().authentication as OAuth2AuthenticationToken
                 val map = authentication.principal.attributes
                 val convertUser = convertUser(authentication.authorizedClientRegistrationId, map)
 
-                user = userRepository.findByEmail(convertUser?.email ?: "")
-                if (user == null) user = userRepository.save(convertUser ?: User())
+                val user = userRepository.findByEmail(convertUser?.email ?: "")
+                    ?: userRepository.save(convertUser ?: defaultUser)
 
                 setRoleIfNotSame(user, authentication, map)
+                session.setAttribute("user", user)
+                user
             } catch (e: ClassCastException) {
-                return user ?: User()
+                defaultUser
             }
         }
-        return user
     }
 
     private fun convertUser(authority: String, map: Map<String, Any>): User? {

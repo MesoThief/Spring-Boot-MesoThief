@@ -11,7 +11,7 @@ enum class CustomOAuth2Provider {
             builder.scope("profile")
             builder.authorizationUri("https://kauth.kakao.com/oauth/authorize")
             builder.tokenUri("https://kauth.kakao.com/oauth/token")
-            builder.userInfoUri("https://kapi.kakao/com/v1/user/me")
+            builder.userInfoUri("https://kapi.kakao/com/v2/user/me")
             builder.userNameAttributeName("id")
             builder.clientName("Kakao")
             return builder
@@ -24,7 +24,7 @@ enum class CustomOAuth2Provider {
         val builder = ClientRegistration.withRegistrationId(registrationId)
         builder.clientAuthenticationMethod(method)
         builder.authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-        builder.redirectUriTemplate(redirectUri)
+        builder.redirectUri(redirectUri)
         return builder
     }
 

@@ -71,25 +71,23 @@ class UserArgumentResolver(private val userRepository: UserRepository): HandlerM
     }
 
     private fun getModernUser(socialType: SocialType, map: Map<String, Any>): User {
-        return User().also {
-            it.name = map["name"].toString()
-            it.email = map["email"].toString()
-            it.principal = map["id"].toString()
-            it.socialType = socialType
-            it.createdDate = LocalDateTime.now()
+        return User().apply {
+            name = map["name"].toString()
+            email = map["email"].toString()
+            principal = map["id"].toString()
+            this.socialType = socialType
+            createdDate = LocalDateTime.now()
         }
     }
 
     private fun getKakaoUser(map: Map<String, Any>): User {
         val propertyMap = map["properties"] as HashMap<String, String>
-        return User(
-
-        ).also {
-            it.name = propertyMap["nickname"] ?: ""
-            it.email = map["kaccount_email"].toString()
-            it.principal = map["id"].toString()
-            it.socialType = KAKAO
-            it.createdDate = LocalDateTime.now()
+        return User().apply {
+            name = propertyMap["nickname"] ?: ""
+            email = map["kaccount_email"].toString()
+            principal = map["id"].toString()
+            this.socialType = KAKAO
+            createdDate = LocalDateTime.now()
         }
     }
 

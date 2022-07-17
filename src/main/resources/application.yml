@@ -24,6 +24,19 @@ spring:
           facebook:
             client-id: 2457397534398150
             client-secret: dded986f97f60a26c8bfb7363ba2624a
+#          kakao:
+#            client-id: 8dfa885aeacbf3244e308e3325e26c94
+#            redirect-uri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
+#            client-authentication-method: POST
+#            authorization-grant-type: authorization_code
+#            scope: profile_nickname, account_email
+#            client-name: Kakao
+#        provider:
+#          kakao:
+#            authorization-uri: https://kauth.kakao.com/oauth/authorize
+#            token-uri: https://kauth.kakao.com/oauth/token
+#            user-info-uri: https://kapi.kakao.com/v2/user/me
+#            user-name-attribute: id
   main:
     allow-circular-references: true
 custom:

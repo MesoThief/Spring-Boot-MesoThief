@@ -30,24 +30,24 @@ class SpringBootApplication : WebMvcConfigurerAdapter() {
         boardRepository: BoardRepository
     ): CommandLineRunner = CommandLineRunner {
             val user = userRepository.save(
-                User().also {
-                    it.name = "havi"
-                    it.password = "test"
-                    it.email = "havi@gmail.com"
-                    it.createdDate = LocalDateTime.now()
+                User().apply {
+                    name = "havi"
+                    password = "test"
+                    email = "havi@gmail.com"
+                    createdDate = LocalDateTime.now()
                 }
             )
 
             for (index in 1..200) {
                 boardRepository.save(
-                    Board().also {
-                        it.title = "게시글$index"
-                        it.subTitle = "순서$index"
-                        it.content = "콘텐츠"
-                        it.boardType = BoardType.free
-                        it.createdDate = LocalDateTime.now()
-                        it.updatedDate = LocalDateTime.now()
-                        it.user = user
+                    Board().apply {
+                        title = "게시글$index"
+                        subTitle = "순서$index"
+                        content = "콘텐츠"
+                        boardType = BoardType.free
+                        createdDate = LocalDateTime.now()
+                        updatedDate = LocalDateTime.now()
+                        this.user = user
                     }
                 )
             }

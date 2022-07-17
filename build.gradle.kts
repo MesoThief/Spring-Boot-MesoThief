@@ -33,10 +33,11 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("com.h2database:h2")
-    implementation("org.springframework.security:spring-security-oauth2-client")
-    implementation("org.springframework.security:spring-security-oauth2-jose")
-    implementation("org.springframework.boot:spring-boot-starter-security")
-    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.security:spring-security-oauth2-client")    // 추가
+    implementation("org.springframework.security:spring-security-oauth2-jose")      // 추가
+    implementation("org.springframework.boot:spring-boot-starter-security")         // 추가
+    implementation("org.springframework.boot:spring-boot-starter-web")              // 추가
+    implementation("org.jetbrains.kotlin:kotlin-reflect:1.1.51")                    // 의존성 문제? 해결을 위해서 써봄
 
     runtimeOnly("org.springframework.boot:spring-boot-devtools")
     compileOnly("org.projectlombok:lombok")

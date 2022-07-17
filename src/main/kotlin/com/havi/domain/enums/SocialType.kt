@@ -9,6 +9,5 @@ enum class SocialType(name: String) {
     private val ROLE_PREFIX: String = "ROLE_"
 
     val roleType get() = ROLE_PREFIX + name.uppercase()
-
-    fun getValue(): String = name
+    val value get() = name
 }

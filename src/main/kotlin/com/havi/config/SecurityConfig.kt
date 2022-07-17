@@ -69,8 +69,8 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
 
         registrations.add(CustomOAuth2Provider.KAKAO.getBuilder("kakao")
             .clientId(kakaoClientId)
-            .clientSecret("test")
-            .jwkSetUri("test")
+            .clientSecret("temp")
+            .jwkSetUri("temp")
             .build()
         )
 

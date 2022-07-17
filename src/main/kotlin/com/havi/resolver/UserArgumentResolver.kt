@@ -49,7 +49,7 @@ class UserArgumentResolver(private val userRepository: UserRepository): HandlerM
                 val map = authentication.principal.attributes
                 val convertUser = convertUser(authentication.authorizedClientRegistrationId, map)
 
-                var authorizedUser = userRepository.findByEmail(convertUser!!.getEmail())
+                var authorizedUser = userRepository.findByEmail(convertUser!!.email)
                 if (authorizedUser == null) authorizedUser = userRepository.save(convertUser)
 
                 setRoleIfNotSame(authorizedUser, authentication, map)
@@ -71,24 +71,26 @@ class UserArgumentResolver(private val userRepository: UserRepository): HandlerM
     }
 
     private fun getModernUser(socialType: SocialType, map: Map<String, Any>): User {
-        return User(
-            name = map["name"].toString(),
-            email = map["email"].toString(),
-            principal = map["id"].toString(),
-            socialType = socialType,
-            createdDate = LocalDateTime.now(),
-        )
+        return User().also {
+            it.name = map["name"].toString()
+            it.email = map["email"].toString()
+            it.principal = map["id"].toString()
+            it.socialType = socialType
+            it.createdDate = LocalDateTime.now()
+        }
     }
 
     private fun getKakaoUser(map: Map<String, Any>): User {
         val propertyMap = map["properties"] as HashMap<String, String>
         return User(
-            name = propertyMap["nickname"] ?: "",
-            email = map["kaccount_email"].toString(),
-            principal = map["id"].toString(),
-            socialType = KAKAO,
-            createdDate = LocalDateTime.now(),
-        )
+
+        ).also {
+            it.name = propertyMap["nickname"] ?: ""
+            it.email = map["kaccount_email"].toString()
+            it.principal = map["id"].toString()
+            it.socialType = KAKAO
+            it.createdDate = LocalDateTime.now()
+        }
     }
 
     private fun setRoleIfNotSame(
@@ -96,7 +98,7 @@ class UserArgumentResolver(private val userRepository: UserRepository): HandlerM
         authentication: OAuth2AuthenticationToken,
         map: Map<String, Any>,
     ) {
-        val roleType = user.getSocialType().roleType
+        val roleType = user.socialType.roleType
         if (!authentication.authorities.contains(SimpleGrantedAuthority(roleType))) {
             SecurityContextHolder.getContext().authentication =
                 UsernamePasswordAuthenticationToken(

@@ -14,7 +14,6 @@ import org.springframework.context.annotation.Bean
 import org.springframework.web.method.support.HandlerMethodArgumentResolver
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import java.time.LocalDateTime
-import java.util.stream.IntStream
 
 @SpringBootApplication
 class SpringBootApplication : WebMvcConfigurerAdapter() {
@@ -31,25 +30,25 @@ class SpringBootApplication : WebMvcConfigurerAdapter() {
         boardRepository: BoardRepository
     ): CommandLineRunner = CommandLineRunner {
             val user = userRepository.save(
-                User(
-                    name = "havi",
-                    password = "test",
-                    email = "havi@gmail.com",
-                    createdDate = LocalDateTime.now(),
-                )
+                User().also {
+                    it.name = "havi"
+                    it.password = "test"
+                    it.email = "havi@gmail.com"
+                    it.createdDate = LocalDateTime.now()
+                }
             )
 
             for (index in 1..200) {
                 boardRepository.save(
-                    Board(
-                        title = "게시글$index",
-                        subTitle = "순서$index",
-                        content = "콘텐츠",
-                        boardType = BoardType.free,
-                        createdDate = LocalDateTime.now(),
-                        updatedDate = LocalDateTime.now(),
-                        user = user,
-                    )
+                    Board().also {
+                        it.title = "게시글$index"
+                        it.subTitle = "순서$index"
+                        it.content = "콘텐츠"
+                        it.boardType = BoardType.free
+                        it.createdDate = LocalDateTime.now()
+                        it.updatedDate = LocalDateTime.now()
+                        it.user = user
+                    }
                 )
             }
         }

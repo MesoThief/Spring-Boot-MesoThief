@@ -19,11 +19,11 @@ spring:
       client:
         registration:
           google:
-            client-id: 123123123
-            client-secret: 123123123
+            client-id: 791170700874-b8cs57gevlgcflkbslskbb4pog2t5t4s.apps.googleusercontent.com
+            client-secret: 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
           facebook:
-            client-id: 123123123
-            client-secret: 123123123
+            client-id: 2457397534398150
+            client-secret: dded986f97f60a26c8bfb7363ba2624a
   main:
     allow-circular-references: true
 custom:
@@ -35,4 +35,4 @@ logging:
   level:
     root: DEBUG
 server:
-  port: 5000 # AWS Nginx default port
+  port: 8080

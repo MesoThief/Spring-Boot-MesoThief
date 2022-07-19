@@ -17,20 +17,20 @@ import javax.persistence.Table
 @Table
 class Board(
     @Column
-    var title: String,
+    var title: String = "",
 
     @Column
-    var subTitle: String,
+    var subTitle: String = "",
 
     @Column
-    var content: String,
+    var content: String = "",
 
     @Column
     @Enumerated(EnumType.STRING)
-    var boardType: BoardType,
+    var boardType: BoardType = BoardType.FREE,
 
     @OneToOne(fetch = FetchType.LAZY)
-    var user: User,
+    var user: User = User(),
 ): AuditLoggingBase(), Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

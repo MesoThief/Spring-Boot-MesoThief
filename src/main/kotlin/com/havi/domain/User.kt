@@ -13,13 +13,13 @@ import javax.persistence.Table
 class User(
 
     @Column
-    var name: String,
+    var name: String = "",
 
     @Column
-    var password: String,
+    var password: String = "",
 
     @Column
-    var email: String,
+    var email: String = "",
 
     ): AuditLoggingBase(), Serializable {
     @Id

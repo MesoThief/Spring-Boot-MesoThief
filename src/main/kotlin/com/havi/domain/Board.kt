@@ -1,6 +1,7 @@
 package com.havi.domain
 
 import com.havi.domain.enums.BoardType
+import java.io.Serializable
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.EnumType
@@ -30,7 +31,7 @@ class Board(
 
     @OneToOne(fetch = FetchType.LAZY)
     var user: User,
-): AuditLoggingBase(), java.io.Serializable {
+): AuditLoggingBase(), Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var idx: Long? = null

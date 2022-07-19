@@ -1,48 +1,6 @@
-spring:
-  jpa:
-    hibernate:
-      ddl-auto: create
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
-  devtools:
-    livereload:
-      enabled: true
-  thymeleaf:
-    cache: false
-  security:
-    oauth2:
-      client:
-        registration:
-          google:
-            client-id: 791170700874-b8cs57gevlgcflkbslskbb4pog2t5t4s.apps.googleusercontent.com
-            client-secret: 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
-          facebook:
-            client-id: 2457397534398150
-            client-secret: dded986f97f60a26c8bfb7363ba2624a
-#          kakao:
-#            client-id: 8dfa885aeacbf3244e308e3325e26c94
-#            redirect-uri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
-#            client-authentication-method: POST
-#            authorization-grant-type: authorization_code
-#            scope: profile_nickname, account_email
-#            client-name: Kakao
-#        provider:
-#          kakao:
-#            authorization-uri: https://kauth.kakao.com/oauth/authorize
-#            token-uri: https://kauth.kakao.com/oauth/token
-#            user-info-uri: https://kapi.kakao.com/v2/user/me
-#            user-name-attribute: id
-  main:
-    allow-circular-references: true
-custom:
-  oauth2:
-    kakao:
-      client-id: 8dfa885aeacbf3244e308e3325e26c94
+devtools:
+  livereload:
+    enabled: true
 
-logging:
-  level:
-    root: DEBUG
-server:
-  port: 8080
+datasource:
+  url: jdbc:h2:mem:testdb

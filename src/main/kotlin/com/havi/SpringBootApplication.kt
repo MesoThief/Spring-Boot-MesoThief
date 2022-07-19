@@ -13,30 +13,31 @@ import org.springframework.context.annotation.Bean
 @SpringBootApplication
 class SpringBootApplication {
     @Bean
+    @Throws(Exception::class)
     fun runner(
         userRepository: UserRepository,
-        boardRepository: BoardRepository
+        boardRepository: BoardRepository,
     ): CommandLineRunner = CommandLineRunner {
-            val user = userRepository.save(
-                User(
-                    name = "havi",
-                    password = "test",
-                    email = "havi@gmail.com",
-                )
-            )
+        val user = userRepository.save(
+            User(
+                name = "havi",
+                password = "test",
+                email = "havi@gmail.com",
+            ),
+        )
 
-            for (index in 1..200) {
-                boardRepository.save(
-                    Board(
-                        title = "게시글$index",
-                        subTitle = "순서$index",
-                        content = "콘텐츠",
-                        boardType = BoardType.FREE,
-                        user = user,
-                    )
-                )
-            }
+        for (index in 1..200) {
+            boardRepository.save(
+                Board(
+                    title = "게시글$index",
+                    subTitle = "순서$index",
+                    content = "콘텐츠",
+                    boardType = BoardType.FREE,
+                    user = user,
+                ),
+            )
         }
+    }
 }
 
 fun main(args: Array<String>) {

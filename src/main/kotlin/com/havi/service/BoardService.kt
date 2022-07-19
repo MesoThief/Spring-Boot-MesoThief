@@ -9,19 +9,19 @@ import org.springframework.stereotype.Service
 
 @Service
 class BoardService(
-    private val boardRepository: BoardRepository
+    private val boardRepository: BoardRepository,
 ) {
     fun findBoardList(pageable: Pageable): Page<Board> {
         val pageRequest = PageRequest.of(
             if (pageable.pageNumber <= 0) 0
             else pageable.pageNumber - 1,
-            pageable.pageSize
+            pageable.pageSize,
         )
         return boardRepository.findAll(pageRequest)
     }
 
-    fun findBoardByIdx(idx: Long): Board {
-        return boardRepository.findById(idx).get()
+    fun findBoardByIdx(idx: Long): Board? {
+        return boardRepository.findById(idx).orElse(null)
     }
 
     fun saveAndUpdateBoard(board: Board): Board {

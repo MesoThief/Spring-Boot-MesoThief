@@ -52,7 +52,7 @@ class SecurityConfig: WebSecurityConfigurerAdapter() {
                 .successForwardUrl("/board/list")
             .and()
                 .logout()
-                .logoutUrl("/logout")
+                .logoutUrl("/signout")
                 .logoutSuccessUrl("/")
                 .deleteCookies("JSESSIONID")
                 .invalidateHttpSession(true)

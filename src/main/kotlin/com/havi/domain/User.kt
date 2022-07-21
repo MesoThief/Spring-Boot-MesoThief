@@ -1,8 +1,11 @@
 package com.havi.domain
 
+import com.havi.domain.enums.SocialType
 import java.io.Serializable
 import javax.persistence.Column
 import javax.persistence.Entity
+import javax.persistence.EnumType
+import javax.persistence.Enumerated
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
@@ -20,6 +23,13 @@ class User(
 
     @Column
     var email: String = "",
+
+    @Column
+    var principal: String = "",
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    var socialType: SocialType = SocialType.FACEBOOK,
 
     ): AuditLoggingBase(), Serializable {
     @Id

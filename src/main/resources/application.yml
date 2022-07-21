@@ -17,6 +17,8 @@ spring:
           facebook: # https://developers.facebook.com/apps
             client-id: FACEBOOK_CLIENT_ID
             client-secret: FACEBOOK_CLIENT_SECRET
+  main:
+    allow-circular-references: true
 
 custom:
   oauth2:
